@@ -1,0 +1,85 @@
+.CardBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 7rem;
+    width: 6rem;
+    background-color: rgb(99, 59, 49);
+    font-size: 0.8rem;
+    border-radius: 7%;
+    border: 1px solid #efefef;
+}
+
+.CardBox:hover {
+  box-shadow: 0 0 8px #fff;
+  transform: scale(1.03);
+  transition: all 0.2s ease-in-out;
+}
+
+
+.BackCard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 7rem;
+    width: 6rem;
+    background-color: rgb(255, 255, 255);
+    font-size: 0.8rem;
+    border-radius: 7%;
+    border: 1px solid #ffffff;
+}
+
+.BackCard img {
+  max-width: 50%;    /* or a fixed width like 4rem */
+  max-height: 50%;   /* keep it within the card */
+  height: auto;      /* keep aspect ratio */
+  display: block;
+  margin: 0 auto;    /* center horizontally */
+}
+
+.placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 7rem;
+    width: 6rem;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 7%;
+    border: 1px solid #ffffff;
+}
+
+
+.card-title {
+    margin-top: 0.5rem;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.card-art {
+    margin-top: 0.2rem;;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;   
+    height: 2rem;  
+    background-color: black;
+}
+
+.card-art img {
+  width: 1.7rem; 
+  height: 1.7rem;
+  display: block;
+  margin: 0 auto;
+}
+
+.card-content {
+    margin-top: 0.7rem;
+    font-family: 'VT323', monospace;
+    font-size: 0.7em;
+    text-align: left;
+}

@@ -1,0 +1,79 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(54, 54, 54);
+  color: white;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.gamebox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgb(78, 78, 78);
+  width: 85vw; 
+  height: 85vh; 
+  margin: auto;
+
+  overflow: auto;       
+  box-sizing: border-box; 
+  padding: 1rem;       
+}
+
+
+.Title{
+  font-size: 1rem;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.3rem;
+  text-align: center;
+}
+
+.Menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.MenuButtons {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+}
+
+.btn {
+    font-family: 'VT323', cursive;
+    width:40%;
+}
+
+.btn-primary {
+  background-color: #2a0182;
+  border-color: #7a7a7a;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #953c01;
+  border-color: #953c01;
+}
+
+/* Custom size */
+.btn-custom-size {
+  padding: 1rem 2rem; 
+  font-size: 1.25rem;
+  border-radius: 0px;
+}
+
+
+
+.Content{
+    font-family: 'VT323', cursive;
+}

@@ -1,0 +1,69 @@
+.Game {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.cards-divider {
+    width: 100%;
+    height: 50rem;
+    background-color: red ;
+}
+
+.cards-row-wrapper {
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem; 
+    margin-top: 1rem;
+}
+
+.cards-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background-color: aqua;
+  padding: 1rem; 
+  margin: 0 auto;  
+  width: fit-content;
+}
+
+
+.side-element {
+  width: 3rem;
+  text-align: center;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.playing-row-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem; /* spacing between side elements and middle */
+    margin: 2rem 0;
+}
+.playing-section {
+    display: flex;
+    flex-direction: column;
+    height: 20rem;
+    width: 40rem;
+}
+
+.playing-card-section {
+    height:50%;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn{
+    width: auto;
+}
