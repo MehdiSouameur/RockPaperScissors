@@ -7,9 +7,12 @@ import Game from './components/Game';
 function App() {
   const [started, setStarted] = useState(false);
 
+  const [gameKey, setGameKey] = useState<number>(0);
+  const resetGame = () => setGameKey(prev => prev + 1);
+
   return (
     <div className='gamebox'>
-      {started ? <Game /> : <StartMenu onPlay={() => setStarted(true)} />}
+      {started ? <Game  key={gameKey} onReplay={resetGame}/> : <StartMenu onPlay={() => setStarted(true)} />}
     </div>
   )
 }

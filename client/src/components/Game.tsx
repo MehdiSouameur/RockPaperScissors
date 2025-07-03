@@ -7,19 +7,157 @@ import rockSvg from './cards/images/rock.svg';
 import scissorsSvg from './cards/images/scissors.svg';
 import paperSvg from './cards/images/paper.svg';
 
-export default function Game() {
-const [playerCard, setPlayerCard] = useState<{
+export default function Game({ onReplay }: { onReplay: () => void}) {
+
+    // Game card interface
+    interface GameCard {
     title: string;
     imageSrc: string;
     content: React.ReactNode;
-  } | null>(null);
+    onClick?: () => void;
+    }
 
-  return (
+    
+    // Define cards
+    const rockCard: GameCard = {
+    title: 'Rock',
+    imageSrc: rockSvg,
+    content: (
+        <>
+        Beats scissors.<br />
+        Weak against Paper.
+        </>
+    ),
+    };
+    const paperCard: GameCard = {
+    title: 'Paper',
+    imageSrc: paperSvg,
+    content: (
+        <>
+        Beats rock.<br />
+        Weak against scissors.
+        </>
+    ),
+    };
+    const scissorsCard: GameCard = {
+    title: 'Scissors',
+    imageSrc: scissorsSvg,
+    content: (
+        <>
+        Beats paper.<br />
+        Weak against Rock.
+        </>
+    ),
+    };
+
+    // Player card placeholder
+    const [playerCard, setPlayerCard] = useState<{
+        title: string;
+        imageSrc: string;
+        content: React.ReactNode;
+    } | null>(null);
+
+    // Add the cards for the player and give function
+    const CardPresets = [rockCard, paperCard, scissorsCard];
+    const playerCards = CardPresets.map((card) => ({...card,
+    onClick: () => setPlayerCard(card),
+    }));
+
+
+    const [opponentCard, setOpponentCard] = useState<GameCard | null>(null);
+    const [revealOpponent, setRevealOpponent] = useState<boolean>(false);
+
+    const [victoryStatus, setVictoryStatus] = useState(
+    <>
+    </>
+    );
+
+
+
+    const cardRules: { [key: string]: string[] } = {
+        Rock: ["Scissors"],
+        Scissors: ["Paper"],
+        Paper: ["Rock"],
+    }
+
+    const [hasConfirmed, setHasConfirmed] = useState(false); // hide play button
+    const [gameResult, setGameResult] = useState<string>('')
+
+    const countDown = async (): Promise<void> => {
+        const words = ['Rock', 'Paper', 'Scissors', 'Go!'];
+        setVictoryStatus(<></>);
+        for (let i = 0; i < words.length; i++) {
+            await new Promise<void>((resolve) => {
+            setTimeout(() => {
+                setVictoryStatus((prev) => (
+                <>
+                    {prev}
+                    {i > 0 && <br />}
+                    {words[i]}
+                </>
+                ));
+                resolve();
+            }, 500);
+            });
+        }
+    };
+
+        // Game logic
+    const onEvaluate = async () => {
+
+        setHasConfirmed(true); // hide play button
+
+        // Generate a random card from our card preset list
+        const randomCard: GameCard = CardPresets[Math.floor(Math.random() * CardPresets.length)];
+        setOpponentCard(randomCard);
+
+        // UI Rock Paper Scissors countdown
+        await countDown();
+        setRevealOpponent(true);
+
+        // Reassuring TypeScript that playercard is not null
+        if (!playerCard) {
+            return;
+        }
+
+        const enemyTitle: string = randomCard.title;
+        const playerTitle: string  = playerCard.title;
+
+        // Can ensure it's a tie if they're the same card
+        if(enemyTitle == playerTitle){
+            setGameResult("Tie")
+            return
+        }
+
+
+        // Check the advantage that player and enemy has
+        // by checking hashmap
+        let enemyAdvantage : boolean = false;
+        let playerAdvantage: boolean = false;
+
+        enemyAdvantage = cardRules[enemyTitle].some(
+            (rule) => rule.includes(playerTitle)
+        );
+       playerAdvantage = cardRules[playerTitle].some(
+            (rule) => rule.includes(enemyTitle)
+        );
+
+        if(enemyAdvantage){
+            setGameResult("Defeat!")
+        } else if (playerAdvantage){
+            setGameResult("Victory!")
+        } else {
+            setGameResult("Tie")
+        }
+
+    }
+
+    //// HTML ////
+    return (
     <div className='Game'>
 
         {/* Computer set of cards */}
         <div className="cards-row-wrapper">
-            <div className="side-element">0</div>
 
             <div className='cards-section'>
                 <BackCard/>
@@ -32,13 +170,27 @@ const [playerCard, setPlayerCard] = useState<{
         
         {/* Playing field between players */}
         <div className="playing-row-wrapper">
-            <div className="side-element">🤖</div>
+            <div className="side-element">{victoryStatus}</div>
 
             <div className="playing-section">
+
+                {/* Enemy played card*/}
                 <div className="playing-card-section">
-                <Placeholder />
+                {!opponentCard ? (
+                    <Placeholder />
+                ) : revealOpponent ? (
+                    <Card
+                    title={opponentCard.title}
+                    imageSrc={opponentCard.imageSrc}
+                    content={opponentCard.content}
+                    />
+                ) : (
+                    <BackCard />
+                )}
                 </div>
-                <div className="playing-card-section">
+
+                {/* Player played card*/}
+                <div className="playing-card-section mt-1">
                 {playerCard ? (
                     <Card
                     title={playerCard.title}
@@ -51,92 +203,44 @@ const [playerCard, setPlayerCard] = useState<{
                 </div>
             </div>
 
-            <div className="side-element">🧑</div>
+            <div className="side-element">
+                <div>{gameResult}</div>
+                {gameResult && (
+                    <button className="btn btn-secondary mt-2" onClick={onReplay}>
+                    Retry
+                    </button>
+                )}
+
+            </div>
         </div>
 
         
         {/* Player set of cards */}
         <div className="cards-row-wrapper">
-            <div className="side-element">0</div>
 
             <div className="cards-section">
-                        <Card
-                            title="Rock"
-                            imageSrc={rockSvg}
-                            content={
-                                <>
-                                Beats scissors.<br />
-                                Weak against Paper.
-                                </>
-                            }
-                            onClick={() =>
-                                setPlayerCard({
-                                title: 'Rock',
-                                imageSrc: rockSvg,
-                                content: (
-                                    <>
-                                    Beats scissors.<br />
-                                    Weak against Paper.
-                                    </>
-                                ),
-                                })
-                            }
-                            />
-
-                        <Card
-                            title="Scissors"
-                            imageSrc={scissorsSvg}
-                            content={
-                                <>
-                                Beats paper.<br />
-                                Weak against Rock.
-                                </>
-                            }
-                            onClick={() =>
-                                setPlayerCard({
-                                title: 'Scissors',
-                                imageSrc: scissorsSvg,
-                                content: (
-                                    <>
-                                    Beats paper.<br />
-                                    Weak against Rock.
-                                    </>
-                                ),
-                                })
-                            }
-                            />
-
-                        <Card
-                            title="Paper"
-                            imageSrc={paperSvg}
-                            content={
-                                <>
-                                Beats rock.<br />
-                                Weak against scissors.
-                                </>
-                            }
-                            onClick={() =>
-                                setPlayerCard({
-                                title: 'Paper',
-                                imageSrc: paperSvg,
-                                content: (
-                                    <>
-                                    Beats rock.<br />
-                                    Weak against scissors.
-                                    </>
-                                ),
-                                })
-                            }
-                            />
+                {playerCards.map((card) => (
+                    <Card
+                        key={card.title}
+                        title={card.title}
+                        imageSrc={card.imageSrc}
+                        content={card.content}
+                        onClick={card.onClick}
+                    />
+                ))}
             </div>
 
                 <div className="side-element">
-                    <button className='btn btn-primary'>Confirm Play</button>
+                    {!hasConfirmed && (
+                        <button className='btn btn-primary' onClick={onEvaluate}>
+                            Confirm Play
+                        </button>
+                    )}
                 </div>
         </div>
 
 
 
     </div>
-  );
+    );
 }
