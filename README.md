@@ -82,10 +82,21 @@ I'm using each card name as a key in a hashmap to determine which cards beat whi
 
 ```
 
-To add new cards I would just need to define a card using the following structure for a react component
+To add new cards I would just need to define a card using the GameCard interface for a react component:
 
 ```ts
-   const rockCard: GameCard = {
+    interface GameCard {
+        title: string;
+        imageSrc: string;
+        content: React.ReactNode;
+        onClick?: () => void;
+    }
+```
+
+So for example the rock card:
+
+```ts
+    const rockCard: GameCard = {
     title: 'Rock',
     imageSrc: rockSvg,
     content: (
@@ -93,48 +104,7 @@ To add new cards I would just need to define a card using the following structur
         Beats scissors and Lizard.<br />
         Weak against Paper and Spock.
         </>
-    ),
-    };
-    const paperCard: GameCard = {
-    title: 'Paper',
-    imageSrc: paperSvg,
-    content: (
-        <>
-        Beats Rock and Spock.<br />
-        Weak against Scissors and Lizard.
-        </>
-    ),
-    };
-    const scissorsCard: GameCard = {
-    title: 'Scissors',
-    imageSrc: scissorsSvg,
-    content: (
-        <>
-        Beats Paper and Lizard.<br />
-        Weak against Rock and Spock.
-        </>
-    ),
-    };
-    const lizardCard: GameCard = {
-    title: 'Lizard',
-    imageSrc: lizardSvg,
-    content: (
-        <>
-        Beats Paper and Spock.<br />
-        Weak against Rock and Scissors.
-        </>
-    ),
-    };
-    const spockCard: GameCard = {
-    title: 'Spock',
-    imageSrc: spockSvg,
-    content: (
-        <>
-        Beats Scissors and Rock.<br />
-        Weak against Paper and Lizard.
-        </>
-    ),
-    };
+    )
 ```
 
 Then add it to the list of cardPresets:
@@ -145,6 +115,6 @@ Then add it to the list of cardPresets:
 
 After this it should automatically render the additional cards to each player. This way I can easily add or remove cards to expand the game.
 
-I haven't implemented the "Computer plays what the player played last" feature, but to achieve this, when the user clicks on Retry, I would grab the card the player played, pass it through to the game reset as a state and write some logic to use that state (if not null) to decide which card the computer should play.
+I haven't implemented the "Computer plays what the player played last" feature, but to achieve this, when the user clicks on Retry, I would grab the card of the player in the "onReplay" function, then pass it through to the next game render and use that card to be played by the computer.
 
 Thank you for reviewing my submission and I hope you enjoyed the little app!
