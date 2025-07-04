@@ -6,6 +6,8 @@ import './Game.css'
 import rockSvg from './cards/images/rock.svg';
 import scissorsSvg from './cards/images/scissors.svg';
 import paperSvg from './cards/images/paper.svg';
+import lizardSvg from './cards/images/lizard.svg';
+import spockSvg from './cards/images/spock.svg';
 
 export default function Game({ onReplay }: { onReplay: () => void}) {
 
@@ -24,8 +26,8 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
     imageSrc: rockSvg,
     content: (
         <>
-        Beats scissors.<br />
-        Weak against Paper.
+        Beats scissors and Lizard.<br />
+        Weak against Paper and Spock.
         </>
     ),
     };
@@ -34,8 +36,8 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
     imageSrc: paperSvg,
     content: (
         <>
-        Beats rock.<br />
-        Weak against scissors.
+        Beats Rock and Spock.<br />
+        Weak against Scissors and Lizard.
         </>
     ),
     };
@@ -44,8 +46,28 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
     imageSrc: scissorsSvg,
     content: (
         <>
-        Beats paper.<br />
-        Weak against Rock.
+        Beats Paper and Lizard.<br />
+        Weak against Rock and Spock.
+        </>
+    ),
+    };
+    const lizardCard: GameCard = {
+    title: 'Lizard',
+    imageSrc: lizardSvg,
+    content: (
+        <>
+        Beats Paper and Spock.<br />
+        Weak against Rock and Scissors.
+        </>
+    ),
+    };
+    const spockCard: GameCard = {
+    title: 'Spock',
+    imageSrc: spockSvg,
+    content: (
+        <>
+        Beats Scissors and Rock.<br />
+        Weak against Paper and Lizard.
         </>
     ),
     };
@@ -58,7 +80,7 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
     } | null>(null);
 
     // Add the cards for the player and give function
-    const CardPresets = [rockCard, paperCard, scissorsCard];
+    const CardPresets = [rockCard, paperCard, scissorsCard, lizardCard, spockCard];
     const playerCards = CardPresets.map((card) => ({...card,
     onClick: () => setPlayerCard(card),
     }));
@@ -99,7 +121,7 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
         }
     };
 
-    // Game logic // 
+    //// GAME LOGIC //// 
     const onEvaluate = async () => {
         
         // If theres no player card, do nothing
@@ -117,6 +139,7 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
         setRevealOpponent(true);
 
 
+        // Retrieve the names of the cards played
         const enemyTitle: string = randomCard.title;
         const playerTitle: string  = playerCard.title;
 
@@ -135,10 +158,11 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
         enemyAdvantage = cardRules[enemyTitle].some(
             (rule) => rule.includes(playerTitle)
         );
-       playerAdvantage = cardRules[playerTitle].some(
-            (rule) => rule.includes(enemyTitle)
-        );
-
+        playerAdvantage = cardRules[playerTitle].some(
+                (rule) => rule.includes(enemyTitle)
+            );
+        
+        // Set result based on who has an advantage
         if(enemyAdvantage){
             setGameResult("Defeat!")
         } else if (playerAdvantage){
@@ -235,7 +259,7 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
                     )}
                 </div>
         </div>
-        
+
     </div>
     );
 }
