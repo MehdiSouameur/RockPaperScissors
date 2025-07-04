@@ -2,15 +2,17 @@
 
 Welcome to my Rock, paper, Scissors submission for the True technical assessment!
 
-For this challenge I decided to use **React with Typescript**. I'm aware this is for a .Net C# role, however I code in C# every day and since I have been learning React and Typescript in my free time recently I figured this was a good opportunity to learn React and Typescript whilst delivering the assessment. In C#, I would've either used .Net's WPF (As I've made a few small games on it before) or I would've gone for a command line implementation.
+For this challenge I decided to use **React with Typescript**. I'm aware this is for a .Net C# role, however I code in C# every day and since I have been learning the React/Typescript/Node tech stack in my free time recently I figured this was a good opportunity to learn React and Typescript whilst delivering the assessment. In C#, I would've either used .Net's WPF (As I've made a few small games on it before) or I would've gone for a command line implementation.
 
 I've hosted the game on Render here: https://mehdi-rockpaperscissors.onrender.com/
 
-I'm aware that what I made is a little over the scope of what was asked, in fact I spent significantly more time working on the Front UI than the core logic itself dealing with html and css problems but it was a great learning experience overall and I feel much more comfortable using React and Typescript after this little project. It's in a great position to be scaled further with additional features. An Express.js backend is linked up (Although unused here) to add things like multiplayer, user auth, scoreboards, more complex rule evaluation and so on.
+I'm aware that what I made is a little over the scope of what was asked, in fact I spent significantly more time working on the Front UI (html, css) than the core logic itself. It certainly would've been much faster and efficient for me to make it in a terminal and still satisfy the assessment. Regardless, I'm satisfied with how it turned out, it was a great learning experience overall and I feel much more comfortable using React and Typescript after this little project. It's in a great position to be scaled further with additional features. An Express.js backend is linked up (Although unused here) to add things like multiplayer (using Websockets), user auth, scoreboards, more complex rule evaluation and so on.
+
+Certainly the styling could use a bit more work and it's not super responsive but, it does the job for desktops.
 
 You can find the core game logic under **client/src/components/Game.tsx** inside the function **onEvaluate()**.
 
-You can also check out the logic here:
+You can also check out that function here:
 
 ```ts
     //// GAME LOGIC //// 
@@ -66,7 +68,7 @@ You can also check out the logic here:
     };
 ```
 
-I'm using each card name as a key in a hashmap to determine which cards beat which:
+I'm using each card name as a key in a hashmap to determine which cards beat which, I can add any new card and rules here:
 
 ```ts
     // Set of rules, each key returns the cards that key can defeat
@@ -83,14 +85,13 @@ I'm using each card name as a key in a hashmap to determine which cards beat whi
 To add new cards I would just need to define a card using the following structure for a react component
 
 ```ts
-    // Define cards (Would add Lizard and Spock here)
-    const rockCard: GameCard = {
+   const rockCard: GameCard = {
     title: 'Rock',
     imageSrc: rockSvg,
     content: (
         <>
-        Beats scissors.<br />
-        Weak against Paper.
+        Beats scissors and Lizard.<br />
+        Weak against Paper and Spock.
         </>
     ),
     };
@@ -99,8 +100,8 @@ To add new cards I would just need to define a card using the following structur
     imageSrc: paperSvg,
     content: (
         <>
-        Beats rock.<br />
-        Weak against scissors.
+        Beats Rock and Spock.<br />
+        Weak against Scissors and Lizard.
         </>
     ),
     };
@@ -109,8 +110,28 @@ To add new cards I would just need to define a card using the following structur
     imageSrc: scissorsSvg,
     content: (
         <>
-        Beats paper.<br />
-        Weak against Rock.
+        Beats Paper and Lizard.<br />
+        Weak against Rock and Spock.
+        </>
+    ),
+    };
+    const lizardCard: GameCard = {
+    title: 'Lizard',
+    imageSrc: lizardSvg,
+    content: (
+        <>
+        Beats Paper and Spock.<br />
+        Weak against Rock and Scissors.
+        </>
+    ),
+    };
+    const spockCard: GameCard = {
+    title: 'Spock',
+    imageSrc: spockSvg,
+    content: (
+        <>
+        Beats Scissors and Rock.<br />
+        Weak against Paper and Lizard.
         </>
     ),
     };
@@ -119,7 +140,7 @@ To add new cards I would just need to define a card using the following structur
 Then add it to the list of cardPresets:
 ```ts
    // Add the cards for the player and give function
-    const CardPresets = [rockCard, paperCard, scissorsCard];
+    const CardPresets = [rockCard, paperCard, scissorsCard, lizardCard, spockCard];
 ```
 
 After this it should automatically render the additional cards to each player. This way I can easily add or remove cards to expand the game.
