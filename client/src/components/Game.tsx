@@ -63,12 +63,13 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
     onClick: () => setPlayerCard(card),
     }));
 
-
+    
     const [opponentCard, setOpponentCard] = useState<GameCard | null>(null);
-    const [revealOpponent, setRevealOpponent] = useState<boolean>(false);
+    const [revealOpponent, setRevealOpponent] = useState<boolean>(false); // Whether we show opponent card or not
     const [victoryStatus, setVictoryStatus] = useState(<></>);
     const [hasConfirmed, setHasConfirmed] = useState(false); // hide play button
     const [gameResult, setGameResult] = useState<string>('')
+
     // Set of rules, each key returns the cards that key can defeat
     const cardRules: { [key: string]: string[] } = {
         Rock: ["Scissors", "Lizard"],
@@ -78,6 +79,7 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
         Spock: ["Scissors", "Rock"]
     }
 
+    // Rock, Paper, Scissors countdown
     const countDown = async (): Promise<void> => {
         const words = ['Rock', 'Paper', 'Scissors', 'Go!'];
         setVictoryStatus(<></>);
@@ -114,7 +116,7 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
         await countDown();
         setRevealOpponent(true);
 
-        
+
         const enemyTitle: string = randomCard.title;
         const playerTitle: string  = playerCard.title;
 
@@ -233,9 +235,7 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
                     )}
                 </div>
         </div>
-
-
-
+        
     </div>
     );
 }

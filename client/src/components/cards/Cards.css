@@ -32,11 +32,11 @@
 }
 
 .BackCard img {
-  max-width: 50%;    /* or a fixed width like 4rem */
-  max-height: 50%;   /* keep it within the card */
-  height: auto;      /* keep aspect ratio */
+  max-width: 50%; 
+  max-height: 50%;  
+  height: auto;    
   display: block;
-  margin: 0 auto;    /* center horizontally */
+  margin: 0 auto;  
 }
 
 .placeholder {
