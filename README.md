@@ -80,7 +80,7 @@ I'm using each card name as a key in a hashmap to determine which cards beat whi
 
 ```
 
-I haven't implemented the Lizard and Spock cards (To avoid extra UI work) but the logic is there, I would just need to make the Lizard and Spock cards following this format:
+To add new cards I would just need to define a card using the following structure for a react component
 
 ```ts
     // Define cards (Would add Lizard and Spock here)
@@ -122,4 +122,8 @@ Then add it to the list of cardPresets:
     const CardPresets = [rockCard, paperCard, scissorsCard];
 ```
 
-And it should automatically render the additional cards to each player. This way I can easily add or remove cards to expand the game. 
+After this it should automatically render the additional cards to each player. This way I can easily add or remove cards to expand the game.
+
+I haven't implemented the "Computer plays what the player played last" feature, but to achieve this, when the user clicks on Retry, I would grab the card the player played, pass it through to the game reset as a state and write some logic to use that state (if not null) to decide which card the computer should play.
+
+Thank you for reviewing my submission and I hope you enjoyed the little app!
