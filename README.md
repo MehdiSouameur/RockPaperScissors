@@ -10,6 +10,8 @@ I'm aware that what I made is a little over the scope of what was asked, in fact
 
 You can find the core game logic under **client/src/components/Game.tsx** inside the function **onEvaluate()**.
 
+You can also check out the logic here:
+
 ```ts
     //// GAME LOGIC //// 
     const onEvaluate = async () => {
@@ -63,3 +65,61 @@ You can find the core game logic under **client/src/components/Game.tsx** inside
 
     };
 ```
+
+I'm using each card name as a key in a hashmap to determine which cards beat which:
+
+```ts
+    // Set of rules, each key returns the cards that key can defeat
+    const cardRules: { [key: string]: string[] } = {
+        Rock: ["Scissors", "Lizard"],
+        Scissors: ["Paper", "Lizard"],
+        Paper: ["Rock", "Spock"],
+        Lizard: ["Paper", "Spock"],
+        Spock: ["Scissors", "Rock"]
+    }
+
+```
+
+I haven't implemented the Lizard and Spock cards (To avoid extra UI work) but the logic is there, I would just need to make the Lizard and Spock cards following this format:
+
+```ts
+    // Define cards (Would add Lizard and Spock here)
+    const rockCard: GameCard = {
+    title: 'Rock',
+    imageSrc: rockSvg,
+    content: (
+        <>
+        Beats scissors.<br />
+        Weak against Paper.
+        </>
+    ),
+    };
+    const paperCard: GameCard = {
+    title: 'Paper',
+    imageSrc: paperSvg,
+    content: (
+        <>
+        Beats rock.<br />
+        Weak against scissors.
+        </>
+    ),
+    };
+    const scissorsCard: GameCard = {
+    title: 'Scissors',
+    imageSrc: scissorsSvg,
+    content: (
+        <>
+        Beats paper.<br />
+        Weak against Rock.
+        </>
+    ),
+    };
+```
+
+Then add it to the list of cardPresets:
+```ts
+   // Add the cards for the player and give function
+    const CardPresets = [rockCard, paperCard, scissorsCard];
+```
+
+And it should automatically render the additional cards to each player. This way I can easily add or remove cards to expand the game. 
