@@ -11,5 +11,55 @@ I'm aware that what I made is a little over the scope of what was asked, in fact
 You can find the core game logic under **client/src/components/Game.tsx** inside the function **onEvaluate()**.
 
 ```ts
-  const add = (a: number, b: number): number => {return a + b;};
+    //// GAME LOGIC //// 
+    const onEvaluate = async () => {
+        
+        // If theres no player card, do nothing
+        if (!playerCard) {
+            return;
+        }
+        setHasConfirmed(true); // hide play button
+
+        // Generate a random card from our card preset list
+        const randomCard: GameCard = CardPresets[Math.floor(Math.random() * CardPresets.length)];
+        setOpponentCard(randomCard);
+
+        // UI Rock Paper Scissors countdown
+        await countDown();
+        setRevealOpponent(true);
+
+
+        // Retrieve the names of the cards played
+        const enemyTitle: string = randomCard.title;
+        const playerTitle: string  = playerCard.title;
+
+        // Can ensure it's a tie if they're the same card
+        if(enemyTitle == playerTitle){
+            setGameResult("Tie")
+            return
+        }
+
+
+        // Check the advantage that player and enemy has
+        // by checking hashmap
+        let enemyAdvantage : boolean = false;
+        let playerAdvantage: boolean = false;
+
+        enemyAdvantage = cardRules[enemyTitle].some(
+            (rule) => rule.includes(playerTitle)
+        );
+        playerAdvantage = cardRules[playerTitle].some(
+                (rule) => rule.includes(enemyTitle)
+            );
+        
+        // Set result based on who has an advantage
+        if(enemyAdvantage){
+            setGameResult("Defeat!")
+        } else if (playerAdvantage){
+            setGameResult("Victory!")
+        } else {
+            setGameResult("Tie")
+        }
+
+    };
 ```
