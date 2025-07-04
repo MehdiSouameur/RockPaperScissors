@@ -6,6 +6,6 @@ For this challenge I decided to use **React with Typescript**. I'm aware this is
 
 I've hosted the game on Render here: https://mehdi-rockpaperscissors.onrender.com/
 
-I'm aware that what I made is a little over the scope of what was asked, in fact I spent significantly more time working on the Front UI than the core logic itself dealing with html and css problems but it was a great learning experience and I feel much more comfortable using React and Typescript after this little project. It's in a great position to be scaled further with additional features. An Express.js backend is linked up (Although unused here) to add things like multiplayer, user auth, scoreboards, more complex rule evaluation and so on.
+I'm aware that what I made is a little over the scope of what was asked, in fact I spent significantly more time working on the Front UI than the core logic itself dealing with html and css problems but it was a great learning experience overall and I feel much more comfortable using React and Typescript after this little project. It's in a great position to be scaled further with additional features. An Express.js backend is linked up (Although unused here) to add things like multiplayer, user auth, scoreboards, more complex rule evaluation and so on.
 
 You can find the core game logic under **client/src/components/Game.tsx** inside the function **onEvaluate()**.
