@@ -117,4 +117,6 @@ After this it should automatically render the additional cards to each player. T
 
 I haven't implemented the "Computer plays what the player played last" feature, but to achieve this, when the user clicks on Retry, I would grab the card of the player in the "onReplay" function, then pass it through to the next game render and use that card to be played by the computer.
 
+For testing I relied on manual testing via the UI. However, we could write a Unit Test for outcome evaluation, making sure each combination of cards gives the expected result. The code is structured to easily include any eventual unit test we may need to add if the application grew in complexity.
+
 Thank you for reviewing my submission and I hope you enjoyed the little app!
