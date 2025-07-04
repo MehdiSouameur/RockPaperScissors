@@ -10,6 +10,6 @@ I'm aware that what I made is a little over the scope of what was asked, in fact
 
 You can find the core game logic under **client/src/components/Game.tsx** inside the function **onEvaluate()**.
 
-<pre>```ts
+```ts
   const add = (a: number, b: number): number => {return a + b;};
-  ```</pre>
+```
