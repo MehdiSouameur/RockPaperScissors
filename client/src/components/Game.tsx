@@ -18,7 +18,7 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
     }
 
     
-    // Define cards
+    // Define cards (Would add Lizard and Spock here)
     const rockCard: GameCard = {
     title: 'Rock',
     imageSrc: rockSvg,
@@ -66,22 +66,17 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
 
     const [opponentCard, setOpponentCard] = useState<GameCard | null>(null);
     const [revealOpponent, setRevealOpponent] = useState<boolean>(false);
-
-    const [victoryStatus, setVictoryStatus] = useState(
-    <>
-    </>
-    );
-
-
-
-    const cardRules: { [key: string]: string[] } = {
-        Rock: ["Scissors"],
-        Scissors: ["Paper"],
-        Paper: ["Rock"],
-    }
-
+    const [victoryStatus, setVictoryStatus] = useState(<></>);
     const [hasConfirmed, setHasConfirmed] = useState(false); // hide play button
     const [gameResult, setGameResult] = useState<string>('')
+    // Set of rules, each key returns the cards that key can defeat
+    const cardRules: { [key: string]: string[] } = {
+        Rock: ["Scissors", "Lizard"],
+        Scissors: ["Paper", "Lizard"],
+        Paper: ["Rock", "Spock"],
+        Lizard: ["Paper", "Spock"],
+        Spock: ["Scissors", "Rock"]
+    }
 
     const countDown = async (): Promise<void> => {
         const words = ['Rock', 'Paper', 'Scissors', 'Go!'];
@@ -102,9 +97,13 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
         }
     };
 
-        // Game logic
+    // Game logic // 
     const onEvaluate = async () => {
-
+        
+        // If theres no player card, do nothing
+        if (!playerCard) {
+            return;
+        }
         setHasConfirmed(true); // hide play button
 
         // Generate a random card from our card preset list
@@ -115,11 +114,7 @@ export default function Game({ onReplay }: { onReplay: () => void}) {
         await countDown();
         setRevealOpponent(true);
 
-        // Reassuring TypeScript that playercard is not null
-        if (!playerCard) {
-            return;
-        }
-
+        
         const enemyTitle: string = randomCard.title;
         const playerTitle: string  = playerCard.title;
 
